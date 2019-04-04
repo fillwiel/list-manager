@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Item List</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <style>
+        form {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <p></p>
+    <div th:if="${message != null}" class="alert" th:classappend="${message.alertClass}" role="alert">
+        <span th:text="${message.messageValue}"></span>
+    </div>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${items.empty}">
+            <td colspan="2"> No Books Available</td>
+        </tr>
+        <tr th:each="item : ${items}">
+            <td><span th:text="${item.name}"> Name </span></td>
+            <td class="white-space:nowrap">
+                <form action="#" th:action="@{'/item/moveToTop/{elementId}'(elementId=${item.listIndex})}"
+                      th:method="post">
+                    <input type="hidden" name="_method" value="post"/>
+                    <button type="submit" class="btn btn-primary">Move To Top</button>
+                </form>
+                <form action="#" th:action="@{'/item/moveUp/{elementId}'(elementId=${item.listIndex})}"
+                      th:method="post">
+                    <input type="hidden" name="_method" value="post"/>
+                    <button type="submit" class="btn btn-primary">Move Up</button>
+                </form>
+                <form action="#" th:action="@{'/item/moveDown/{elementId}'(elementId=${item.listIndex})}"
+                      th:method="post">
+                    <input type="hidden" name="_method" value="post"/>
+                    <button type="submit" class="btn btn-primary">Move Down</button>
+                </form>
+                <form action="#" th:action="@{'/item/moveToBottom/{elementId}'(elementId=${item.listIndex})}"
+                      th:method="post">
+                    <input type="hidden" name="_method" value="post"/>
+                    <button type="submit" class="btn btn-primary">Move To Bottom</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
